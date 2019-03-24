@@ -32,6 +32,11 @@ for point in points:
     else:
         unique.append(point)
 
+def get_angle(p1,p2, q1, q2):
+    m_p = (p2[0]-p1[0])/(p2[1]-p1[1])
+    m_q = (q2[0]-q1[0])/(q2[1]-q1[1])
+    print(np.degrees(np.arctan(abs((m_p-m_q)/(1+m_p*m_q)))))
+
 def find_extentions(pnt):
     print("Scanning surroundings of", pnt)
     tl = [pnt[1]-10, pnt[0]-10]
@@ -62,8 +67,10 @@ def find_extentions(pnt):
         except Exception as e:
             print(e)
             pass
+    
     cv.line(original, (pnt[1], pnt[0]), sol_h, [0, 255, 0], 1)
     cv.line(original, (pnt[1], pnt[0]), sol_v, [255, 0, 0], 1) 
+    get_angle((pnt[1], pnt[0]), sol_h, (pnt[1], pnt[0]), sol_v)
 for pnt in unique:
     cv.circle(original, (pnt[1], pnt[0]), 2, [255,255,0])
     find_extentions(pnt)
